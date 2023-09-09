@@ -5,9 +5,8 @@ const { createNewTransaction, getTransactionHistoryByWallet } = require('../quer
 const { updateWalletBalance, getWalletFromUserId, getWalletIdFromUserId } = require('../queries/walletQueries');
 const { getUserByParam, getUsernameFromWalletId, getUserStripeId } = require('../queries/userQueries');
 
-// TODO secret key in .env
-const stripe = require('stripe')("sk_test_51NkrWXA2kau6fLsqOyJvGAXseIIyHNbf0ejoks9cs9bI7FWVjzqwyw9boj67ilx8FQfG9nzfWnuhPrZvmW8bJsD400a8z6IqeR");
-
+require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_SK);
 const emptyUUID = "00000000-0000-0000-0000-000000000000";
 
 const getTransactionHistory = async (req, res) => {

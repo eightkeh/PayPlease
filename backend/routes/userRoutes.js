@@ -15,9 +15,11 @@ router.post('/signup', signupUser);
 // ----  [protected] ----
 
 router.use(authenticate)
+
+// connect user to stripe using Connect onboarding
+router.post('/stripeconnect', connectUserToStripe);
 // check and update if user connected to stripe already
 router.get('/stripeconnect/:id', checkUserStripeConnect);
 
-// connect user to stripe using Connect onboarding
-router.post('/stripeconnect/', connectUserToStripe);
+
 module.exports = router;

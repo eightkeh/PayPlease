@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const { updateUserStripeIsConnected, updateUserStripeId, getUserById, getUserByUsername, getUserByPhone, getUserByEmail, isEmailTaken, insertUser } = require("../queries/userQueries");
 const { createWallet } = require("../queries/walletQueries");
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const stripe = require('stripe')(process.env.STRIPE_SK);
 
 function createToken(user_id) {
     return jwt.sign({user_id}, process.env.SECRET_KEY, {expiresIn: '2h'});
@@ -174,7 +176,7 @@ const connectUserToStripe = async (req, res) => {
             // no stripe id yet, create and add to database
             const account = await stripe.accounts.create({
                 country: 'SG',
-                type: 'custom',
+                type: 'express',
                 capabilities: {
                     card_payments: {
                         requested: true,
@@ -196,8 +198,8 @@ const connectUserToStripe = async (req, res) => {
         // create connection url link
         const accountLink = await stripe.accountLinks.create({
             account: stripeAccountId,
-            refresh_url: "https://localhost:3002/wallet/dashboard",
-            return_url: "https://localhost:3002/wallet/dashboard",// TODO change to be sent in req body
+            refresh_url: return_url,
+            return_url: return_url,
             type: "account_onboarding",
             collect: 'eventually_due',
         });

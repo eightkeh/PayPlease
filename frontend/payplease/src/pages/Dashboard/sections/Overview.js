@@ -117,11 +117,11 @@ export default function Overview() {
       <Grid
         container
         xs={12}
-        style={{ marginTop: "50px", marginLeft: "85px", marginBottom: "-100px" }}
+        style={{ marginTop: "50px", marginLeft: "85px", marginBottom: "-70px" }}
       >
         <TransferModal setTransferSuccess={setTransferSuccess} />
         <TopupModal onTopupSuccess={(success) => handleTopupSuccess(success)} />
-        <WithdrawModal setTransferSuccess={setTransferSuccess} />
+        <WithdrawModal setWithdrawalSuccess={setTransferSuccess} />
       </Grid>
       {/* Left Card */}
       <Grid item xs={10} lg={5}>

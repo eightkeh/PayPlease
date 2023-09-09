@@ -4,7 +4,7 @@ const walletRouter = require('./routes/walletRoutes');
 const transactionRouter = require('./routes/transactionRoutes');
 const authenticate = require('./middleware/authenticate');
 const cors = require("cors");
-const stripe = require("stripe")("sk_test_51NkrWXA2kau6fLsqOyJvGAXseIIyHNbf0ejoks9cs9bI7FWVjzqwyw9boj67ilx8FQfG9nzfWnuhPrZvmW8bJsD400a8z6IqeR");
+const stripe = require("stripe")("sk_test_51NnjeIJ2zPNuBdoNwPxx2b7N1mkf6Gg9X9MSZGlnhzYhfDY5xBUKS2iUgLlfjCOPnOalIb7TChpziXeKCmLc4Fsv00QYbuHH3z");
 const { v4: uuidv4 } = require('uuid');
 
 require('dotenv').config();
@@ -12,8 +12,8 @@ require('dotenv').config();
 const app = express();
 
 
-app.listen(2000, () => {
-    console.log("listening to port 2000")
+app.listen(3000, () => {
+    console.log("listening to port 3000")
 });
 
 // middleware to log to console

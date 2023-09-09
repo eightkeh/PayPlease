@@ -36,14 +36,14 @@ export default function WithdrawModal({ setWithdrawalSuccess }) {
   const checkStripeConnection = async (userId) => {
     try {
       const { token: auth_token } = user;
-      const response = await fetch(`/api/stripeconnect/${userId}`, {
+      const response = await fetch(`/api/user/stripeconnect/${userId}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${auth_token}`,
         },
       });
       const data = await response.json();
-      if (data.isConnected) {
+      if (data.isConnected === "true") {
         // User is connected to Stripe
         console.log("User is connected to Stripe");
         return true;
@@ -61,13 +61,13 @@ export default function WithdrawModal({ setWithdrawalSuccess }) {
   const initiateStripeOnboarding = async (userId) => {
     try {
       const { token: auth_token } = user;
-      const response = await fetch(`/api/stripeconnect/`, {
+      const response = await fetch(`/api/user/stripeconnect/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth_token}`,
         },
-        body: JSON.stringify({ user_id: userId }),
+        body: JSON.stringify({ user_id: userId, return_url: window.locatio }),
       });
       const data = await response.json();
       if (data.url) {
@@ -146,13 +146,9 @@ export default function WithdrawModal({ setWithdrawalSuccess }) {
                 <CloseIcon fontSize="medium" sx={{ cursor: "pointer" }} onClick={toggleModal} />
               </MKBox>
               <div>
-                {checkStripeConnection(user.user_id) ? (
-                  <p>Connected to Stripe</p>
-                ) : (
-                  <button onClick={() => initiateStripeOnboarding(user.user_id)}>
-                    Connect to Stripe
-                  </button>
-                )}
+                <button onClick={() => initiateStripeOnboarding(user.user_id)}>
+                  Connect to Stripe
+                </button>
               </div>
               <Divider sx={{ my: 0 }} />
               <form onSubmit={handleWithdraw}>
